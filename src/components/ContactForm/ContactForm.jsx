@@ -14,7 +14,7 @@ class ContactForm extends React.Component {
     // console.log(e.target.name);
     const { name, value, id } = e.target;
 
-    this.setState({ [name]: value, [id]: this.nameInputId });
+    this.setState({ [name]: value, id: this.nameInputId });
   };
 
   handleSubmit = e => {

@@ -11,7 +11,7 @@ class App extends React.Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filter: '',
+    filter: [],
   };
 
   formSubmitHandler = contact => {
@@ -29,9 +29,10 @@ class App extends React.Component {
     const filterItems = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(value.toLowerCase())
     );
-    console.log(filterItems);
 
     this.setState({ filter: [filterItems] });
+
+    console.log(this.state.filter);
   };
 
   render() {
@@ -41,10 +42,7 @@ class App extends React.Component {
         <ContactForm onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
         <Filter filterContacts={this.filterContacts} />
-        <ContactList
-          contacts
-          // filterContacts={this.state.filter}
-        />
+        <ContactList contacts={this.state.contacts} />
       </>
     );
   }
