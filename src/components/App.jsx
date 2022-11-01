@@ -25,7 +25,7 @@ class App extends React.Component {
     //return если контакт уже есть
     if (repeatName) {
       alert(`${contact.name} is already in contacts.`);
-      return
+      return;
     }
 
     this.setState(({ contacts }) => ({
@@ -46,6 +46,12 @@ class App extends React.Component {
     );
   };
 
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
     const {
       formSubmitHandler,
@@ -57,13 +63,17 @@ class App extends React.Component {
     const renderContacts = filter ? getFilteredContacts(filter) : contacts;
 
     return (
-      <>
+      <div style={{ padding: '10px' }}>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={formSubmitHandler} />
+
         <h2>Contacts</h2>
         <Filter value={filter} onFilterHandler={onFilterHandler} />
-        <ContactList contacts={renderContacts} />
-      </>
+        <ContactList
+          contacts={renderContacts}
+          deleteContact={this.deleteContact}
+        />
+      </div>
     );
   }
 }

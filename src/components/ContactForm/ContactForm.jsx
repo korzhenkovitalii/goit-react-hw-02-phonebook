@@ -1,5 +1,7 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import shortid from 'shortid';
+import css from 'components/ContactForm/ContactForm.module.css';
 
 class ContactForm extends React.Component {
   state = {
@@ -9,7 +11,7 @@ class ContactForm extends React.Component {
 
   onChangeInput = e => {
     // console.log(e.target.name);
-    const { name, value, id } = e.target;
+    const { name, value } = e.target;
 
     this.setState({ [name]: value, id: shortid.generate() });
   };
@@ -28,9 +30,12 @@ class ContactForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor={this.nameInputId}>Name:</label>
+      <form className={css.form} onSubmit={this.handleSubmit}>
+        <label className={css.label} htmlFor={this.nameInputId}>
+          Name:
+        </label>
         <input
+          className={css.input}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -40,8 +45,11 @@ class ContactForm extends React.Component {
           onChange={this.onChangeInput}
         />
 
-        <label htmlFor={this.telInputId}>Number:</label>
+        <label className={css.label} htmlFor={this.telInputId}>
+          Number:
+        </label>
         <input
+          className={css.input}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -50,10 +58,14 @@ class ContactForm extends React.Component {
           value={this.state.number}
           onChange={this.onChangeInput}
         />
-        <button type="submit">Add contact</button>
+        <button className={css.button} type="submit">Add contact</button>
       </form>
     );
   }
 }
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default ContactForm;
