@@ -11,38 +11,58 @@ class App extends React.Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filter: [],
+    filter: '',
   };
 
   formSubmitHandler = contact => {
     console.log(contact);
+
+    //Проверка есть ли уже данные в контактах
+    const repeatName = this.state.contacts.some(
+      ({ name }) => name.toLowerCase() === contact.name.trim().toLowerCase()
+    );
+
+    //return если контакт уже есть
+    if (repeatName) {
+      alert(`${contact.name} is already in contacts.`);
+      return
+    }
 
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
     }));
   };
 
-  filterContacts = e => {
-    const { value } = e.target;
-    console.log();
+  onFilterHandler = e => {
+    this.setState({ filter: e.target.value });
+  };
 
-    const filterItems = this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(value.toLowerCase())
+  getFilteredContacts = filterString => {
+    const { contacts } = this.state;
+    const normalizedFilter = filterString.toLowerCase().trim();
+
+    return contacts.filter(({ name }) =>
+      name.toLowerCase().includes(normalizedFilter)
     );
-
-    this.setState({ filter: [filterItems] });
-
-    console.log(this.state.filter);
   };
 
   render() {
+    const {
+      formSubmitHandler,
+      onFilterHandler,
+      getFilteredContacts,
+      state: { contacts, filter },
+    } = this;
+
+    const renderContacts = filter ? getFilteredContacts(filter) : contacts;
+
     return (
       <>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.formSubmitHandler} />
+        <ContactForm onSubmit={formSubmitHandler} />
         <h2>Contacts</h2>
-        <Filter filterContacts={this.filterContacts} />
-        <ContactList contacts={this.state.contacts} />
+        <Filter value={filter} onFilterHandler={onFilterHandler} />
+        <ContactList contacts={renderContacts} />
       </>
     );
   }

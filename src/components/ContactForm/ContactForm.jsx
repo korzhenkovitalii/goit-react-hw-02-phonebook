@@ -7,14 +7,11 @@ class ContactForm extends React.Component {
     number: '',
   };
 
-  nameInputId = shortid.generate();
-  telInputId = shortid.generate();
-
   onChangeInput = e => {
     // console.log(e.target.name);
     const { name, value, id } = e.target;
 
-    this.setState({ [name]: value, id: this.nameInputId });
+    this.setState({ [name]: value, id: shortid.generate() });
   };
 
   handleSubmit = e => {
@@ -34,7 +31,6 @@ class ContactForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label htmlFor={this.nameInputId}>Name:</label>
         <input
-          id={this.nameInputId}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -46,7 +42,6 @@ class ContactForm extends React.Component {
 
         <label htmlFor={this.telInputId}>Number:</label>
         <input
-          id={this.telInputId}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
