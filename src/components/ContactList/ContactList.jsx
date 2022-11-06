@@ -5,16 +5,15 @@ import { ContactListItem } from 'components/ContactListItem/ContactListItem';
 export const ContactList = ({ contacts, deleteContact }) => {
   return (
     <ul>
-      {contacts.map(({ id, name, number }) => {
-        return (
-          <ContactListItem
-            key={id}
-            name={name}
-            number={number}
-            deleteContact={deleteContact}
-          />
-        );
-      })}
+      {contacts.map(({ id, name, number }) => (
+        <ContactListItem
+          key={id}
+          id={id}
+          name={name}
+          number={number}
+          deleteContact={deleteContact}
+        />
+      ))}
     </ul>
   );
 };
