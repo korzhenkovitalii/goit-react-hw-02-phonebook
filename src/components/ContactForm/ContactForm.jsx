@@ -4,6 +4,10 @@ import shortid from 'shortid';
 import css from 'components/ContactForm/ContactForm.module.css';
 
 class ContactForm extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     name: '',
     number: '',
@@ -58,14 +62,12 @@ class ContactForm extends React.Component {
           value={this.state.number}
           onChange={this.onChangeInput}
         />
-        <button className={css.button} type="submit">Add contact</button>
+        <button className={css.button} type="submit">
+          Add contact
+        </button>
       </form>
     );
   }
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default ContactForm;
